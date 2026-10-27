@@ -39,7 +39,7 @@ function add(file, x) {
   if (x.la === null || x.lo === null) { errors.push(`${file}: "${x.n}" koordinat tidak valid`); return; }
   if (!inside(x.la, x.lo)) { dropped.push(`${x.n} (di luar Solok Selatan)`); return; }
   names.add(key);
-  places.push({ id: `${key.replace(/[^a-z0-9]+/g, "-")}-${r5(x.la)}`, n: x.n, c: x.c, r: x.r ?? null, z: x.z ?? null, la: r5(x.la), lo: r5(x.lo), s: x.s, d: null, h: null });
+  places.push({ id: `${key.replace(/[^a-z0-9]+/g, "-")}-${r5(x.la)}`, n: x.n, c: x.c, r: x.r ?? null, z: x.z ?? null, la: r5(x.la), lo: r5(x.lo), s: x.s, d: null, h: null, ph: [] });
 }
 const wcat = (n) => { const s = n.toLowerCase();
   if (/hot waterboom|air panas/.test(s)) return "airpanas";
@@ -69,6 +69,8 @@ for (const [name, o] of Object.entries(ov.byName)) {
   if (!p) { warns.push(`overrides: "${name}" tidak ditemukan di data (salah ketik?)`); continue; }
   Object.assign(p, o);
 }
+const photos = fs.existsSync(new URL("../data/photos.json", import.meta.url)) ? JSON.parse(R("data/photos.json")) : {};
+for (const p of places) p.ph = photos[p.id] ?? [];
 places.sort((a, b) => (b.z ?? 0) - (a.z ?? 0) || (b.r ?? 0) - (a.r ?? 0) || a.n.localeCompare(b.n));
 const by = {}; places.forEach((p) => (by[p.c] = (by[p.c] ?? 0) + 1));
 console.log("Jumlah per kategori:", by, "\nDibuang:", dropped.length);
