@@ -1,7 +1,7 @@
 export type Cat = "alam" | "budaya" | "airpanas" | "kuliner" | "penginapan" | "kesehatan";
 export interface Place {
   id: string; n: string; c: Cat; r: number | null; z: number | null;
-  la: number; lo: number; s: string; d: string | null; h: string | null;
+  la: number; lo: number; s: string; d: string | null; h: string | null; ph?: { f: string; c: string; l?: string }[];
 }
 export const CATS: Record<Cat, string> = { alam: "Alam & Taman", budaya: "Ikon & Budaya", airpanas: "Air Panas", kuliner: "Kuliner", penginapan: "Menginap", kesehatan: "Kesehatan" };
 export const TABS = { wisata: "Wisata", alam: "Alam", budaya: "Ikon", airpanas: "Air Panas", kuliner: "Kuliner", penginapan: "Menginap", kesehatan: "Kesehatan" } as const;
