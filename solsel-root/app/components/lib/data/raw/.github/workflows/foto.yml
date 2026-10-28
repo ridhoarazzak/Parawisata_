@@ -1,0 +1,27 @@
+name: Ambil foto
+on:
+  workflow_dispatch:
+    inputs:
+      kategori:
+        description: "Kategori (pisah koma): alam,budaya,airpanas,penginapan,kuliner,kesehatan"
+        default: "alam,budaya,airpanas,penginapan"
+permissions:
+  contents: write
+jobs:
+  foto:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: node scripts/build-data.mjs
+      - run: node scripts/fetch-photos.mjs
+        env:
+          PHOTO_CATS: ${{ inputs.kategori }}
+      - run: node scripts/build-data.mjs
+      - name: Simpan hasil
+        run: |
+          git config user.name "foto-bot"
+          git config user.email "foto-bot@users.noreply.github.com"
+          git add public/images data/photos.json data/places.json
+          git diff --cached --quiet || (git commit -m "Tambah foto tempat" && git push)
