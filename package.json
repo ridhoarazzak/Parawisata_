@@ -1,6 +1,6 @@
 "scripts": {
   "dev": "next dev",
-  "build": "next build",
+  "build": "node scripts/build-data.mjs && next build",,
   "start": "next start",
   "lint": "next lint",
   "data": "node scripts/build-data.mjs",
