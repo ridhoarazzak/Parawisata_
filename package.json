@@ -1,0 +1,8 @@
+"scripts": {
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint",
+  "data": "node scripts/build-data.mjs",
+  "prebuild": "node scripts/build-data.mjs"
+},
